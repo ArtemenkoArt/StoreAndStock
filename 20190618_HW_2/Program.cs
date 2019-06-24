@@ -11,10 +11,59 @@ namespace _20190618_HW_2
     {
         public static List<string> eventLog = new List<string>();
 
+        public static List<Product> products = new List<Product>()
+            {
+            new Product("Milk", 10.00M, 3),
+            new Product("Kefir", 12.00M, 5),
+            new Product("Yogurt", 15.00M, 7),
+            new Product("Cheese", 50.00M, 30),
+            new Product("Butter", 20.00M, 21)
+            };
+
+        public static void SelectBaseQtyProducts(List<Product> products, Stock stock)
+        {
+            Store.products = products;
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Insert product and start qty:");
+                for (int i = 0; i < products.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1} { products[i].Name }");
+                }
+
+                //var ProductID = 1;
+                Console.Write("Insert product: ");
+                var ProductID = 0;
+                var inputID = Console.ReadLine();
+                int.TryParse(inputID, out ProductID);
+                if (ProductID == 0)
+                {
+                    break;
+                }
+
+                //var qty = 50;
+
+                Console.Write("Insert qty: ");
+                var qty = 0;
+                var inputQty = Console.ReadLine();
+                int.TryParse(inputQty, out qty);
+                if (qty == 0)
+                {
+                    break;
+                }
+
+                products[ProductID - 1].SetBaseQty(qty);
+
+                stock.Add(products[ProductID - 1], qty, new DateTime(2019, 06, 23));
+                products.Remove(products[ProductID - 1]);
+            }
+        }
+
         static void Main(string[] args)
         {
             Store.stock = new Stock();
-            Store.SelectBaseQtyProducts(Store.products, Store.stock);
+            SelectBaseQtyProducts(products, Store.stock);
             Store.eventLog += AddEvent;
 
             DateTime dateTime = new DateTime(2019, 6, 1);

@@ -9,15 +9,7 @@ namespace ClassLibrary
     public static class Store
     {
         public static Stock stock = new Stock();
-        public static List<Product> products = new List<Product>()
-            {
-            new Product("Milk", 10.00M, 3),
-            new Product("Kefir", 12.00M, 5),
-            new Product("Yogurt", 15.00M, 7),
-            new Product("Cheуse", 50.00M, 30),
-            new Product("Butter", 20.00M, 21)
-            };
-
+        public static List<Product> products = new List<Product>();
         public static readonly List<Customer> customers = new List<Customer>();
         public static readonly List<Supplyer> supplyers = new List<Supplyer>();
         //public List<string> eventLog = new List<string>();
@@ -27,45 +19,6 @@ namespace ClassLibrary
         static Store()
         {
 
-        }
-
-        public static void SelectBaseQtyProducts(List<Product> products, Stock stock)
-        {
-            while (true)
-            {
-                Console.Clear();
-                Console.WriteLine("Insert product and start qty:");
-                for (int i = 0; i < products.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1} { products[i].Name }");
-                }
-
-                //var ProductID = 1;
-                Console.Write("Insert product: ");
-                var ProductID = 0;
-                var inputID = Console.ReadLine();
-                int.TryParse(inputID, out ProductID);
-                if (ProductID == 0)
-                {
-                    break;
-                }
-
-                //var qty = 50;
-
-                Console.Write("Insert qty: ");
-                var qty = 0;
-                var inputQty = Console.ReadLine();
-                int.TryParse(inputQty, out qty);
-                if (qty == 0)
-                {
-                    break;
-                }
-
-                products[ProductID - 1].SetBaseQty(qty);
-
-                stock.Add(products[ProductID - 1], qty, new DateTime(2019, 06, 23));
-                products.Remove(products[ProductID - 1]);
-            }
         }
 
         public static void FillCustomersAndSupplyers()
@@ -102,6 +55,7 @@ namespace ClassLibrary
                     }
                 });
             }
+
             Task.WaitAll(customersTask);
 
             Task[] supplayersTask = new Task[supplyers.Count];

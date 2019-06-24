@@ -16,7 +16,7 @@ namespace ClassLibrary
                 if (stock[product.Key].Count < (decimal)product.Key.BaseQty / 5) // (50 / 5 = 20%)
                 {
                     stock.Add(product.Key, product.Key.BaseQty, dateTime);
-                    msg.Add($"Supply {product.Key.Name} - 1");
+                    msg.Add($"Supply {product.Key.Name} - {product.Key.BaseQty}");
                 }
             }
             return msg;
